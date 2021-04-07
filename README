@@ -1,0 +1,3 @@
+Docker files to cross-compile SDL2-based projects for single board computers.
+
+Very permissive license (http://unlicense.org/).
