@@ -1,0 +1,15 @@
+#! /bin/sh
+set -e
+
+# no git submodules, as hello is just an example
+
+thirdparty=$HOME/crossbuild/thirdparty
+
+mkdir -p $thirdparty
+cd $thirdparty
+
+git clone https://github.com/efornara/es2
+git clone https://github.com/efornara/SDL sdl2
+
+git clone --depth 1 https://github.com/nothings/stb
+git clone --depth 1 --branch 2.83.7 https://github.com/bulletphysics/bullet3

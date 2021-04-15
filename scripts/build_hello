@@ -1,0 +1,20 @@
+#! /bin/sh
+set -e
+
+script=$(readlink -f "$0")
+script_path=$(dirname "$script")
+. $script_path/detect
+
+src=$HOME/git/crossbuild/hello
+obj=$HOME/crossbuild/build/$tag/hello
+
+mkdir -p $obj
+cd $obj
+
+if [ $# -eq 1 ] ; then
+	target=$1
+else
+	target=final
+fi
+
+nice make -f $src/Makefile HOST=$host TAG=$tag TARGET=$target -j 2

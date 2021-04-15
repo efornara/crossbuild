@@ -1,0 +1,12 @@
+# detect build environment
+
+if [ -x /usr/bin/arm-linux-gnueabihf-gcc ] ; then
+	host=arm-linux-gnueabihf
+	tag=linux-arm32v7
+elif [ -x /usr/bin/aarch64-linux-gnu-gcc ] ; then
+	host=aarch64-linux-gnu
+	tag=linux-arm64v8
+else
+	host=x86_64-linux-gnu
+	tag=linux-x86_64
+fi
