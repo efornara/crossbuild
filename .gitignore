@@ -1,3 +1,4 @@
 *.o
 *.bin
+assets.cc
 .clang-format

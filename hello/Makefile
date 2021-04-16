@@ -16,6 +16,7 @@ LIBS =
 OBJS = \
 	main.o \
 	shell.o \
+	assets.o \
 	#
 
 EXTRA_PATH = $(HOME)/crossbuild/build/$(TAG)
@@ -59,5 +60,8 @@ format:
 
 $(BIN): $(OBJS)
 	$(CXX) $(LDFLAGS) -o $(BIN) $(OBJS) $(EXTRA_OBJS) $(LIBS)
+
+assets.cc: assets.txt
+	python3 assets.py <assets.txt >assets.cc
 
 $(OBJS): hello.h

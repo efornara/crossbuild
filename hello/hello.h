@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 
+#include <cstddef>
+#include <cstdint>
 #include <cstdio>
 
 using std::string;
@@ -21,6 +23,13 @@ struct Error {
 #endif
 			;
 };
+
+struct AssetData {
+	const uint8_t *p;
+	size_t n;
+};
+
+AssetData get_asset(const char *tag);
 
 struct Size {
 	float width, height;
