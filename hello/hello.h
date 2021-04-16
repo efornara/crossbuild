@@ -30,6 +30,7 @@ struct AssetData {
 };
 
 AssetData get_asset(const char *tag);
+string get_license(const char *tag);
 
 struct Size {
 	float width, height;

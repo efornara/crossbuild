@@ -16,6 +16,7 @@ LIBS =
 OBJS = \
 	main.o \
 	shell.o \
+	licenses.o \
 	assets.o \
 	#
 
