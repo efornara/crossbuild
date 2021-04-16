@@ -16,7 +16,7 @@ Error::Error(const char *format, ...) {
 	std::exit(1);
 }
 
-[[ noreturn ]] static void usage() {
+[[noreturn]] static void usage() {
 	printf(R"(
 usage: hello [options]
 
@@ -29,7 +29,7 @@ options:
 	std::exit(0);
 }
 
-[[ noreturn ]] static void show_license(const char *tag) {
+[[noreturn]] static void show_license(const char *tag) {
 	string s = get_license(tag);
 	printf("%s", s.c_str());
 	std::exit(0);

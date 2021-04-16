@@ -9,7 +9,7 @@ namespace licenses {
 struct Definition {
 	const char *tag;
 	const char *description;
-} definitions[] {
+} definitions[]{
 	{ "bullet", "Bullet Continuous Collision Detection and Physics Library" },
 	{ "es2", "ES 2.0 Loader by Emanuele Fornara" },
 	{ "sdl2", "Simple DirectMedia Layer" },
@@ -44,7 +44,7 @@ string get(const char *tag) {
 	return get("?");
 }
 
-}
+} // namespace licenses
 
 string get_license(const char *tag) {
 	return licenses::get(tag);
