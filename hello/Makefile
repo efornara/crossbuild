@@ -11,9 +11,12 @@ endif
 
 CXX = $(HOST)-g++
 CXXFLAGS = -std=c++17 -Wall
-OBJS = hello.o
 LDFLAGS =
 LIBS =
+OBJS = \
+	main.o \
+	shell.o \
+	#
 
 EXTRA_PATH = $(HOME)/crossbuild/build/$(TAG)
 
@@ -51,5 +54,10 @@ all: $(BIN)
 clean:
 	rm -f *.o *.bin
 
+format:
+	clang-format -i *.h *.cc
+
 $(BIN): $(OBJS)
 	$(CXX) $(LDFLAGS) -o $(BIN) $(OBJS) $(EXTRA_OBJS) $(LIBS)
+
+$(OBJS): hello.h
