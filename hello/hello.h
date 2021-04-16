@@ -45,5 +45,12 @@ struct IShell {
 
 IShell *new_Shell();
 
+struct ISim {
+	virtual ~ISim();
+	virtual float step() = 0;
+};
+
+ISim *new_Sim();
+
 constexpr const char *title = "Hello";
 constexpr Size initial_size{ 960, 540 };

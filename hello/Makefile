@@ -16,6 +16,7 @@ LIBS =
 OBJS = \
 	main.o \
 	shell.o \
+	sim.o \
 	licenses.o \
 	assets.o \
 	#
@@ -23,6 +24,7 @@ OBJS = \
 EXTRA_PATH = $(HOME)/crossbuild/build/$(TAG)
 
 EXTRA_OBJS = $(EXTRA_PATH)/es2/es2ld.o
+LIBS += -L$(EXTRA_PATH)/bullet -lbullet
 
 ifeq ($(TARGET),debug)
 CXXFLAGS += -ggdb -DDEBUG
@@ -43,6 +45,7 @@ CXXFLAGS += \
   -I$(HOME)/git/crossbuild/hello \
   -I$(HOME)/crossbuild/thirdparty/stb \
   -I$(HOME)/crossbuild/thirdparty/es2 \
+  -I$(HOME)/crossbuild/thirdparty/bullet3/src \
   #
 
 SDL2_CONFIG = $(HOME)/crossbuild/local/$(TAG)/bin/sdl2-config

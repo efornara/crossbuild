@@ -12,44 +12,54 @@ subject to the following restrictions:
 2. Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
 3. This notice may not be removed or altered from any source distribution.
 */
+// dirty hack to make it embeddable by Emanuele Fornara
+// clang-format off
 
 ///-----includes_start-----
 #include "btBulletDynamicsCommon.h"
-#include <stdio.h>
 
 /// This is a Hello World program for running a basic Bullet physics simulation
 
-int main(int argc, char** argv)
-{
 	///-----includes_end-----
+
+static float hello_world(int state) {
+	static btDefaultCollisionConfiguration* collisionConfiguration;
+	static btCollisionDispatcher* dispatcher;
+	static btBroadphaseInterface* overlappingPairCache;
+	static btSequentialImpulseConstraintSolver* solver;
+	static btDiscreteDynamicsWorld* dynamicsWorld;
+	static btCollisionShape* groundShape;
+	static btAlignedObjectArray<btCollisionShape*> collisionShapes;
+	float result = 0;
 
 	int i;
 	///-----initialization_start-----
+	if (state == 0) {
 
 	///collision configuration contains default setup for memory, collision setup. Advanced users can create their own configuration.
-	btDefaultCollisionConfiguration* collisionConfiguration = new btDefaultCollisionConfiguration();
+	collisionConfiguration = new btDefaultCollisionConfiguration();
 
 	///use the default collision dispatcher. For parallel processing you can use a diffent dispatcher (see Extras/BulletMultiThreaded)
-	btCollisionDispatcher* dispatcher = new	btCollisionDispatcher(collisionConfiguration);
+	dispatcher = new	btCollisionDispatcher(collisionConfiguration);
 
 	///btDbvtBroadphase is a good general purpose broadphase. You can also try out btAxis3Sweep.
-	btBroadphaseInterface* overlappingPairCache = new btDbvtBroadphase();
+	overlappingPairCache = new btDbvtBroadphase();
 
 	///the default constraint solver. For parallel processing you can use a different solver (see Extras/BulletMultiThreaded)
-	btSequentialImpulseConstraintSolver* solver = new btSequentialImpulseConstraintSolver;
+	solver = new btSequentialImpulseConstraintSolver;
 
-	btDiscreteDynamicsWorld* dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher,overlappingPairCache,solver,collisionConfiguration);
+	dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher,overlappingPairCache,solver,collisionConfiguration);
 
 	dynamicsWorld->setGravity(btVector3(0,-10,0));
 
 	///-----initialization_end-----
 
 	///create a few basic rigid bodies
-	btCollisionShape* groundShape = new btBoxShape(btVector3(btScalar(50.),btScalar(50.),btScalar(50.)));
+	groundShape = new btBoxShape(btVector3(btScalar(50.),btScalar(50.),btScalar(50.)));
 
 	//keep track of the shapes, we release memory at exit.
 	//make sure to re-use collision shapes among rigid bodies whenever possible!
-	btAlignedObjectArray<btCollisionShape*> collisionShapes;
+	//btAlignedObjectArray<btCollisionShape*> collisionShapes;
 
 	collisionShapes.push_back(groundShape);
 
@@ -110,11 +120,10 @@ int main(int argc, char** argv)
 
 
 /// Do some simulation
+	} else if (state == 1) {
 
 
 	///-----stepsimulation_start-----
-	for (i=0;i<100;i++)
-	{
 		dynamicsWorld->stepSimulation(1.f/60.f,10);
 		
 		//print positions of all objects
@@ -131,15 +140,16 @@ int main(int argc, char** argv)
 			{
 				trans = obj->getWorldTransform();
 			}
-			printf("world pos object %d = %f,%f,%f\n",j,float(trans.getOrigin().getX()),float(trans.getOrigin().getY()),float(trans.getOrigin().getZ()));
+			if (j == 1)
+				result = float(trans.getOrigin().getY());
 		}
-	}
 
 	///-----stepsimulation_end-----
 
 	//cleanup in the reverse order of creation/initialization
 	
 	///-----cleanup_start-----
+	} else if (state == 2) {
 
 	//remove the rigidbodies from the dynamics world and delete them
 	for (i=dynamicsWorld->getNumCollisionObjects()-1; i>=0 ;i--)
@@ -179,8 +189,32 @@ int main(int argc, char** argv)
 	//next line is optional: it will be cleared by the destructor when the array goes out of scope
 	collisionShapes.clear();
 
+	} // state
+
 	///-----cleanup_end-----
-	printf("Press a key to exit\n");
-	getchar();
+	return result;
 }
 
+// clang-format on
+
+#include "hello.h"
+
+ISim::~ISim() {
+}
+
+class Sim : public ISim {
+public:
+	Sim() {
+		hello_world(0);
+	}
+	~Sim() {
+		hello_world(2);
+	}
+	float step() {
+		return hello_world(1);
+	}
+};
+
+ISim *new_Sim() {
+	return new Sim();
+}

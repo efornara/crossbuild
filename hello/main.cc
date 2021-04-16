@@ -56,8 +56,10 @@ static void parse_args(int argc, char *argv[]) {
 int main(int argc, char *argv[]) {
 	parse_args(argc, argv);
 	ptr<IShell> shell(new_Shell());
+	ptr<ISim> sim(new_Sim());
 	while (shell->process_events()) {
 		shell->start_frame();
+		printf("bullet: %f\n", sim->step());
 		shell->end_frame();
 	}
 }
