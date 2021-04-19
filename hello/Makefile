@@ -45,6 +45,7 @@ CXXFLAGS += \
   -I$(HOME)/git/crossbuild/hello \
   -I$(HOME)/crossbuild/thirdparty/stb \
   -I$(HOME)/crossbuild/thirdparty/es2 \
+  -I$(HOME)/crossbuild/thirdparty/glm \
   -I$(HOME)/crossbuild/thirdparty/bullet3/src \
   #
 

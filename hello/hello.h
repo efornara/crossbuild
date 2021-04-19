@@ -16,6 +16,14 @@ using ptr = std::unique_ptr<T>;
 
 using std::printf;
 
+#include <glm/glm.hpp>
+
+using vec2 = glm::vec2;
+using vec3 = glm::vec3;
+using vec4 = glm::vec4;
+using mat4 = glm::mat4;
+using ivec2 = glm::ivec2;
+
 struct Error {
 	Error(const char *format, ...)
 #ifdef __GNUC__
@@ -32,14 +40,10 @@ struct AssetData {
 AssetData get_asset(const char *tag);
 string get_license(const char *tag);
 
-struct Size {
-	float width, height;
-};
-
 struct IShell {
 	virtual ~IShell();
 	virtual bool process_events() = 0;
-	virtual Size start_frame() = 0;
+	virtual ivec2 start_frame() = 0;
 	virtual void end_frame() = 0;
 };
 
@@ -53,4 +57,4 @@ struct ISim {
 ISim *new_Sim();
 
 constexpr const char *title = "Hello";
-constexpr Size initial_size{ 960, 540 };
+constexpr ivec2 initial_size = ivec2(960, 540);

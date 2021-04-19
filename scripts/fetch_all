@@ -13,3 +13,4 @@ git clone https://github.com/efornara/SDL sdl2
 
 git clone --depth 1 https://github.com/nothings/stb
 git clone --depth 1 --branch 2.83.7 https://github.com/bulletphysics/bullet3
+git clone --depth 1 --branch 0.9.9.8 https://github.com/g-truc/glm

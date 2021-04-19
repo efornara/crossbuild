@@ -12,7 +12,7 @@ class Shell : public IShell {
 private:
 	SDL_Window *window;
 	bool fullscreen = false;
-	Size size;
+	ivec2 size;
 
 public:
 	Shell() {
@@ -29,7 +29,7 @@ public:
 			SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
 			SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);
 		}
-		if (!(window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, size.width, size.height, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN)))
+		if (!(window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, size.x, size.y, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN)))
 			throw Error("SDL_CreateWindow failed");
 		SDL_GL_CreateContext(window);
 		es2_init(SDL_GL_GetProcAddress, use_es2);
@@ -56,8 +56,8 @@ public:
 				break;
 			case SDL_WINDOWEVENT:
 				if (event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED) {
-					size.width = event.window.data1;
-					size.height = event.window.data2;
+					size.x = event.window.data1;
+					size.y = event.window.data2;
 				}
 				break;
 			default:
@@ -66,8 +66,8 @@ public:
 		}
 		return true;
 	}
-	Size start_frame() {
-		glViewport(0, 0, size.width, size.height);
+	ivec2 start_frame() {
+		glViewport(0, 0, size.x, size.y);
 		glClear(GL_COLOR_BUFFER_BIT);
 		return size;
 	}
