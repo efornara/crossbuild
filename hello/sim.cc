@@ -104,8 +104,9 @@ static float hello_world(int state) {
 		bool isDynamic = (mass != 0.f);
 
 		btVector3 localInertia(0,0,0);
-		if (isDynamic)
+		if (isDynamic) {
 			colShape->calculateLocalInertia(mass,localInertia);
+		}
 
 			startTransform.setOrigin(btVector3(2,10,0));
 		
