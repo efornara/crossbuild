@@ -15,6 +15,7 @@ LDFLAGS =
 LIBS =
 OBJS = \
 	main.o \
+	renderer.o \
 	shell.o \
 	sim.o \
 	licenses.o \

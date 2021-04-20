@@ -43,6 +43,7 @@ string get_license(const char *tag);
 struct IShell {
 	virtual ~IShell();
 	virtual bool process_events() = 0;
+	virtual string controller_info() = 0;
 	virtual ivec2 start_frame() = 0;
 	virtual void end_frame() = 0;
 };
@@ -55,6 +56,18 @@ struct ISim {
 };
 
 ISim *new_Sim();
+
+struct State {
+	string controller_info;
+	float simulation_result;
+};
+
+struct IRenderer {
+	virtual ~IRenderer();
+	virtual void render(ivec2 size, const State &state) = 0;
+};
+
+IRenderer *new_Renderer();
 
 constexpr const char *title = "Hello";
 constexpr ivec2 initial_size = ivec2(960, 540);

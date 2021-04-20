@@ -1,9 +1,10 @@
 // shell.cc
 
-#include "es2ld.h"
 #include "hello.h"
+#include "es2ld.h"
 
 #include <SDL.h>
+#include <SDL_gamecontroller.h>
 
 IShell::~IShell() {
 }
@@ -11,6 +12,7 @@ IShell::~IShell() {
 class Shell : public IShell {
 private:
 	SDL_Window *window;
+	SDL_GameController *controller = nullptr;
 	bool fullscreen = false;
 	ivec2 size;
 
@@ -18,7 +20,7 @@ public:
 	Shell() {
 		size = initial_size;
 		constexpr int use_es2 = 1;
-		if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS) < 0)
+		if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS | SDL_INIT_JOYSTICK) < 0)
 			throw Error("SDL_Init failed");
 		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
@@ -36,7 +38,13 @@ public:
 		printf("GL_VENDOR: %s\n", glGetString(GL_VENDOR));
 		printf("GL_RENDERER: %s\n", glGetString(GL_RENDERER));
 		printf("GL_VERSION: %s\n", glGetString(GL_VERSION));
-		glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
+		for (int i = 0; i < SDL_NumJoysticks(); i++) {
+			if (!SDL_IsGameController(i))
+				continue;
+			if (!(controller = SDL_GameControllerOpen(i)))
+				throw Error("SDL_GameControllerOpen %d failed", i);
+			break;
+		}
 	}
 	bool process_events() {
 		SDL_Event event;
@@ -66,9 +74,23 @@ public:
 		}
 		return true;
 	}
+	string controller_info() {
+		if (!controller)
+			return "No controllers.";
+		string s;
+		s = SDL_GameControllerName(controller);
+		s += '\n';
+		for (int i = 0; i < SDL_CONTROLLER_BUTTON_MAX; i++)
+			s += SDL_GameControllerGetButton(controller, (SDL_GameControllerButton)i) ? 'X' : '.';
+		s += '\n';
+		for (int i = 0; i < SDL_CONTROLLER_AXIS_MAX; i++) {
+			char buf[32];
+			snprintf(buf, sizeof(buf), "%d\n", SDL_GameControllerGetAxis(controller, (SDL_GameControllerAxis)i));
+			s += buf;
+		}
+		return s;
+	}
 	ivec2 start_frame() {
-		glViewport(0, 0, size.x, size.y);
-		glClear(GL_COLOR_BUFFER_BIT);
 		return size;
 	}
 	void end_frame() {

@@ -57,9 +57,13 @@ int main(int argc, char *argv[]) {
 	parse_args(argc, argv);
 	ptr<IShell> shell(new_Shell());
 	ptr<ISim> sim(new_Sim());
+	ptr<IRenderer> renderer(new_Renderer());
+	State state;
 	while (shell->process_events()) {
-		shell->start_frame();
-		printf("bullet: %f\n", sim->step());
+		state.controller_info = shell->controller_info();
+		state.simulation_result = sim->step();
+		ivec2 size = shell->start_frame();
+		renderer->render(size, state);
 		shell->end_frame();
 	}
 }
