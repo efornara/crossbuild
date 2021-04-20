@@ -150,7 +150,7 @@ for i in \
 	BulletDynamics/Vehicle/btWheelInfo.cpp \
 ; do
 	echo $i
-	$host-g++ -O2 -I $src -c $src/$i -o `basename $i .cpp`.o
+	$host-g++ -O2 $archflags -I $src -c $src/$i -o `basename $i .cpp`.o
 done
 
 rm -f libbullet.a

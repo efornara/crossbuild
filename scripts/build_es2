@@ -12,4 +12,4 @@ obj=$HOME/crossbuild/build/$tag/es2
 mkdir -p $obj
 cd $obj
 
-$host-gcc -O2 -c -o es2ld.o $src/es2ld.c
+$host-gcc -O2 $archflags -c -o es2ld.o $src/es2ld.c

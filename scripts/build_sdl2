@@ -13,6 +13,8 @@ mkdir -p $obj
 cd $obj
 
 if [ ! -f $obj/Makefile -o "x$1" = "xconfig" ] ; then
+	export CFLAGS="$archflags"
+	export CXXFLAGS="$archflags"
 	$src/configure \
 	 --prefix=$HOME/crossbuild/local/$tag \
 	 --host=$host \
@@ -22,6 +24,7 @@ if [ ! -f $obj/Makefile -o "x$1" = "xconfig" ] ; then
 	 --disable-video-vulkan \
 	#
 fi
+
 
 nice make -j 2
 make install

@@ -1,12 +1,22 @@
 # detect build environment
 
+# if not cross-compiling, assume raspbian on arm and native on x86_64
+
 if [ -x /usr/bin/arm-linux-gnueabihf-gcc ] ; then
 	host=arm-linux-gnueabihf
-	tag=linux-arm32v7
+	if [ -x /usr/bin/x86_64-linux-gnu-gcc ] ; then
+		tag=linux-arm32v7
+		archflags="-march=armv7-a -mfpu=neon-vfpv4 -mfloat-abi=hard"
+	else
+		tag=linux-arm32v6
+		archflags="-march=armv6 -mfpu=vfp -mfloat-abi=hard"
+	fi
 elif [ -x /usr/bin/aarch64-linux-gnu-gcc ] ; then
 	host=aarch64-linux-gnu
 	tag=linux-arm64v8
+	archflags="-march=armv8-a"
 else
 	host=x86_64-linux-gnu
 	tag=linux-x86_64
+	archflags="-march=native"
 fi

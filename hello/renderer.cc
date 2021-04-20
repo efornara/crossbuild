@@ -187,7 +187,7 @@ private:
 	void render_controller(float aspect, const string &s) {
 		mat4 mvp = glm::ortho<float>(0, 180 * aspect, 180, 0);
 		v.clear();
-		vec2 cursor;
+		vec2 cursor(0);
 		for (char c : s)
 			character(cursor, c);
 		shader.render_triangles(mvp, t_charmap, v);

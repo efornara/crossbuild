@@ -10,7 +10,7 @@ TARGET=debug
 endif
 
 CXX = $(HOST)-g++
-CXXFLAGS = -std=c++17 -Wall
+CXXFLAGS = -std=c++17 -Wall $(ARCHFLAGS)
 LDFLAGS =
 LIBS =
 OBJS = \
@@ -68,6 +68,6 @@ $(BIN): $(OBJS)
 	$(CXX) $(LDFLAGS) -o $(BIN) $(OBJS) $(EXTRA_OBJS) $(LIBS)
 
 assets.cc: assets.txt
-	python3 assets.py <assets.txt >assets.cc
+	python3 $(HOME)/git/crossbuild/hello/assets.py <$< >$@
 
 $(OBJS): hello.h

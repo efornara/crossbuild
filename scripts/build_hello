@@ -17,4 +17,4 @@ else
 	target=final
 fi
 
-nice make -f $src/Makefile HOST=$host TAG=$tag TARGET=$target -j 2
+nice make -f $src/Makefile HOST=$host TAG=$tag TARGET=$target "ARCHFLAGS=$archflags" -j 2
