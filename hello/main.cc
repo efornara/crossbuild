@@ -23,6 +23,7 @@ usage: hello [options]
 options:
   -h              show this message and exit
   -l              show license and exit
+  -c              show credits and exit
   -t component    show third party license and exit (? for list)
 
 )");
@@ -35,6 +36,12 @@ options:
 	std::exit(0);
 }
 
+[[noreturn]] static void show_credits() {
+	AssetData d = get_asset("credits");
+	std::fwrite(d.p, d.n, 1, stdout);
+	std::exit(0);
+}
+
 static void parse_args(int argc, char *argv[]) {
 	for (int i = 1; i < argc; i++) {
 		const char *s = argv[i];
@@ -42,6 +49,8 @@ static void parse_args(int argc, char *argv[]) {
 			usage();
 		} else if (!std::strcmp(s, "-l")) {
 			show_license(nullptr);
+		} else if (!std::strcmp(s, "-c")) {
+			show_credits();
 		} else if (!std::strcmp(s, "-t")) {
 			if (++i == argc)
 				usage();

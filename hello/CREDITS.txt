@@ -1,11 +1,5 @@
 CREDITS
 
-Code:
-
-See scripts/fetch_all
-
-Images:
-
 charmap.png
 https://opengameart.org/content/ascii-bitmap-font-oldschool
 CC0 by domsson
@@ -13,3 +7,4 @@ CC0 by domsson
 ball.png
 https://opengameart.org/content/bouncing-ball-guy
 CC0 by deiphiz
+
