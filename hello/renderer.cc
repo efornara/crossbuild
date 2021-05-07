@@ -181,7 +181,7 @@ private:
 	void render_simulation(float aspect, float y) {
 		mat4 mvp = glm::ortho<float>(-10 * aspect, 10 * aspect, -8, 12);
 		v.clear();
-		quad(vec2(6 * aspect, y), vec2(5, 5));
+		quad(vec2(4 * aspect, y), vec2(5, 5));
 		shader.render_triangles(mvp, t_ball, v);
 	}
 	void render_controller(float aspect, const string &s) {
