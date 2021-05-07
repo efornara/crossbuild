@@ -3,6 +3,8 @@
 #include "hello.h"
 #include "es2ld.h"
 
+#include <stdlib.h>
+
 #include <SDL.h>
 #include <SDL_gamecontroller.h>
 
@@ -20,6 +22,7 @@ public:
 	Shell() {
 		size = initial_size;
 		constexpr int use_es2 = 1;
+		setenv("SDL_VIDEO_RPI_OPTIONS", "gravity=center,scale=letterbox,background=1", 0);
 		if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS | SDL_INIT_JOYSTICK) < 0)
 			throw Error("SDL_Init failed");
 		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
