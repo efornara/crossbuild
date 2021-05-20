@@ -20,7 +20,6 @@ private:
 
 public:
 	Shell() {
-		size = initial_size;
 		constexpr int use_es2 = 1;
 		setenv("SDL_VIDEO_RPI_OPTIONS", "gravity=center,scale=letterbox,background=1", 0);
 		if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS | SDL_INIT_JOYSTICK) < 0)
@@ -34,9 +33,10 @@ public:
 			SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
 			SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);
 		}
-		if (!(window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, size.x, size.y, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_SHOWN)))
+		if (!(window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, initial_size.x, initial_size.y, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_SHOWN | SDL_WINDOW_ALLOW_HIGHDPI)))
 			throw Error("SDL_CreateWindow failed");
 		SDL_GL_CreateContext(window);
+		SDL_GL_GetDrawableSize(window, &size.x, &size.y);
 		es2_init(SDL_GL_GetProcAddress, use_es2);
 		printf("GL_VENDOR: %s\n", glGetString(GL_VENDOR));
 		printf("GL_RENDERER: %s\n", glGetString(GL_RENDERER));
@@ -66,10 +66,8 @@ public:
 				}
 				break;
 			case SDL_WINDOWEVENT:
-				if (event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED) {
-					size.x = event.window.data1;
-					size.y = event.window.data2;
-				}
+				if (event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED)
+					SDL_GL_GetDrawableSize(window, &size.x, &size.y);
 				break;
 			default:
 				break;
