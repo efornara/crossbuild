@@ -149,7 +149,7 @@ for i in \
 	BulletDynamics/Vehicle/btRaycastVehicle.cpp \
 	BulletDynamics/Vehicle/btWheelInfo.cpp \
 ; do
-	echo $i
+	echo $i [-O2 $archflags]
 	$host-g++ -O2 $archflags -I $src -c $src/$i -o `basename $i .cpp`.o
 done
 
