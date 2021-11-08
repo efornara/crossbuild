@@ -1,3 +1,0 @@
-FROM crossbuild:base
-RUN apt-get install -y -q \
- libsdl2-dev libgbm-dev
