@@ -8,7 +8,6 @@ thirdparty=$HOME/crossbuild/thirdparty
 mkdir -p $thirdparty
 cd $thirdparty
 
-git clone https://github.com/efornara/es2
 git clone https://github.com/efornara/sdl2
 
 git clone --depth 1 https://github.com/nothings/stb

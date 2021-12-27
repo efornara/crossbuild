@@ -20,11 +20,11 @@ OBJS = \
 	sim.o \
 	licenses.o \
 	assets.o \
+	es2ld.o \
 	#
 
 EXTRA_PATH = $(HOME)/crossbuild/build/$(TAG)
 
-EXTRA_OBJS = $(EXTRA_PATH)/es2/es2ld.o
 LIBS += -L$(EXTRA_PATH)/bullet -lbullet
 
 ifeq ($(TARGET),debug)
@@ -45,7 +45,6 @@ endif
 CXXFLAGS += \
   -I$(HOME)/git/crossbuild/hello \
   -I$(HOME)/crossbuild/thirdparty/stb \
-  -I$(HOME)/crossbuild/thirdparty/es2 \
   -I$(HOME)/crossbuild/thirdparty/glm \
   -I$(HOME)/crossbuild/thirdparty/bullet3/src \
   #
