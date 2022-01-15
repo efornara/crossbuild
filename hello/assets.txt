@@ -1,5 +1,4 @@
 license_self raw $HOME/git/crossbuild/LICENSE
 license_sdl2 raw $HOME/crossbuild/thirdparty/sdl2/COPYING.txt
-license_stb raw $HOME/crossbuild/thirdparty/stb/LICENSE
-charmap raw $HOME/git/crossbuild/hello/charmap.png
+charmap rgba $HOME/git/crossbuild/hello/charmap.png
 credits raw $HOME/git/crossbuild/hello/CREDITS.txt

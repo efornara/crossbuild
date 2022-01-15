@@ -3,15 +3,6 @@
 #include "hello.h"
 #include "es2ld.h"
 
-#pragma GCC diagnostic ignored "-Wsign-compare"
-#pragma GCC diagnostic ignored "-Wunused-but-set-variable"
-
-#define STB_IMAGE_IMPLEMENTATION
-#include <stb_image.h>
-
-#pragma GCC diagnostic pop
-#pragma GCC diagnostic pop
-
 IRenderer::~IRenderer() {
 }
 
@@ -33,10 +24,11 @@ GLuint load_texture(const char *tag) {
 	AssetData asset = get_asset(tag);
 	if (!asset.p)
 		throw Error("load_texture: get_asset failed for %s", tag);
-	int width, height, n, c = 4;
-	unsigned char *data = stbi_load_from_memory(asset.p, asset.n, &width, &height, &n, c);
-	if (!data)
-		throw Error("load_texture: stbi_load_from_memory failed for %s", tag);
+	constexpr int width{128}, height{64}, size{width * height * 4};
+	if (asset.n != size)
+		throw Error("load_texture: image size not supported for for %s", tag);
+	unsigned char data[size];
+	std::memcpy(data, asset.p, size);
 	mirror_y(data, width, height);
 	GLuint id;
 	glGenTextures(1, &id);
@@ -46,7 +38,6 @@ GLuint load_texture(const char *tag) {
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-	std::free(data);
 	return id;
 }
 	

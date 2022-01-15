@@ -41,7 +41,6 @@ endif
 
 CXXFLAGS += \
   -I$(HOME)/git/crossbuild/hello \
-  -I$(HOME)/crossbuild/thirdparty/stb \
   #
 
 SDL2_CONFIG = $(HOME)/crossbuild/local/$(TAG)/bin/sdl2-config
@@ -60,8 +59,5 @@ format:
 
 $(BIN): $(OBJS)
 	$(CXX) $(LDFLAGS) -o $(BIN) $(OBJS) $(EXTRA_OBJS) $(LIBS)
-
-assets.cc: assets.txt
-	python3 $(HOME)/git/crossbuild/hello/assets.py <$< >$@
 
 $(OBJS): hello.h

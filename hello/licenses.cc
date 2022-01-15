@@ -11,7 +11,6 @@ struct Definition {
 	const char *description;
 } definitions[]{
 	{ "sdl2", "Simple DirectMedia Layer" },
-	{ "stb", "stb_image from http://nothings.org/stb" },
 };
 
 string get(const char *tag) {
