@@ -1,9 +1,6 @@
 license_self raw $HOME/git/crossbuild/LICENSE
-license_bullet raw $HOME/crossbuild/thirdparty/bullet3/LICENSE.txt
-license_es2 raw $HOME/crossbuild/thirdparty/es2/LICENSE
 license_sdl2 raw $HOME/crossbuild/thirdparty/sdl2/COPYING.txt
 license_stb raw $HOME/crossbuild/thirdparty/stb/LICENSE
 license_glm raw $HOME/crossbuild/thirdparty/glm/copying.txt
 charmap raw $HOME/git/crossbuild/hello/charmap.png
-ball raw $HOME/git/crossbuild/hello/ball.png
 credits raw $HOME/git/crossbuild/hello/CREDITS.txt

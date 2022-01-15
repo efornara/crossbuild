@@ -153,7 +153,6 @@ class Renderer : public IRenderer {
 private:
 	Shader shader;
 	GLuint t_charmap;
-	GLuint t_ball;
 	vector<Vertex> v;
 	void quad(vec2 pos, vec2 size, vec2 uv = vec2(0, 0), vec2 delta_uv = vec2(1, 1)) {
 		v.push_back(Vertex{pos, uv});
@@ -178,12 +177,6 @@ private:
 		quad(cursor, size, vec2(col * du, 1 - (row * dv)), vec2(du, -dv));
 		cursor.x += size.x;
 	}
-	void render_simulation(float aspect, float y) {
-		mat4 mvp = glm::ortho<float>(-10 * aspect, 10 * aspect, -8, 12);
-		v.clear();
-		quad(vec2(4 * aspect, y), vec2(5, 5));
-		shader.render_triangles(mvp, t_ball, v);
-	}
 	void render_controller(float aspect, const string &s) {
 		mat4 mvp = glm::ortho<float>(0, 180 * aspect, 180, 0);
 		v.clear();
@@ -195,7 +188,6 @@ private:
 public:
 	Renderer() {
 		t_charmap = load_texture("charmap");
-		t_ball = load_texture("ball");
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_BLEND);
 		glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
@@ -204,7 +196,6 @@ public:
 		glViewport(0, 0, size.x, size.y);
 		glClear(GL_COLOR_BUFFER_BIT);
 		float aspect = size.x / (float)size.y;
-		render_simulation(aspect, state.simulation_result);
 		render_controller(aspect, state.controller_info);
 	}
 };

@@ -50,16 +50,8 @@ struct IShell {
 
 IShell *new_Shell();
 
-struct ISim {
-	virtual ~ISim();
-	virtual float step() = 0;
-};
-
-ISim *new_Sim();
-
 struct State {
 	string controller_info;
-	float simulation_result;
 };
 
 struct IRenderer {
