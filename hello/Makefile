@@ -42,7 +42,6 @@ endif
 CXXFLAGS += \
   -I$(HOME)/git/crossbuild/hello \
   -I$(HOME)/crossbuild/thirdparty/stb \
-  -I$(HOME)/crossbuild/thirdparty/glm \
   #
 
 SDL2_CONFIG = $(HOME)/crossbuild/local/$(TAG)/bin/sdl2-config

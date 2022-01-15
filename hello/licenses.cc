@@ -10,11 +10,8 @@ struct Definition {
 	const char *tag;
 	const char *description;
 } definitions[]{
-	{ "bullet", "Bullet Continuous Collision Detection and Physics Library" },
-	{ "es2", "ES 2.0 Loader by Emanuele Fornara" },
 	{ "sdl2", "Simple DirectMedia Layer" },
 	{ "stb", "stb_image from http://nothings.org/stb" },
-	{ "glm", "OpenGL Mathematics (GLM)" },
 };
 
 string get(const char *tag) {

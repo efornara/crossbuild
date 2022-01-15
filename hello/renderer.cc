@@ -3,8 +3,6 @@
 #include "hello.h"
 #include "es2ld.h"
 
-#include <glm/gtc/matrix_transform.hpp>
-
 #pragma GCC diagnostic ignored "-Wsign-compare"
 #pragma GCC diagnostic ignored "-Wunused-but-set-variable"
 
@@ -134,9 +132,9 @@ public:
 		a_pos = glGetAttribLocation(prg, "a_pos");
 		a_uv = glGetAttribLocation(prg, "a_uv");
 	}
-	void render_triangles(const mat4 &mvp, GLuint tex, const vector<Vertex> &v) {
+	void render_triangles(const ortho &mvp, GLuint tex, const vector<Vertex> &v) {
 		glUseProgram(prg);
-		glUniformMatrix4fv(u_mvp, 1, GL_FALSE, &mvp[0][0]);
+		glUniformMatrix4fv(u_mvp, 1, GL_FALSE, mvp);
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, tex);
 		glUniform1i(u_tex, 0);
@@ -178,7 +176,7 @@ private:
 		cursor.x += size.x;
 	}
 	void render_controller(float aspect, const string &s) {
-		mat4 mvp = glm::ortho<float>(0, 180 * aspect, 180, 0);
+		ortho mvp{0.0f, 180.0f * aspect, 180.0f, 0.0f};
 		v.clear();
 		vec2 cursor(0);
 		for (char c : s)

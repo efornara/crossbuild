@@ -16,13 +16,29 @@ using ptr = std::unique_ptr<T>;
 
 using std::printf;
 
-#include <glm/glm.hpp>
+template<typename T>
+struct v2 {
+	T x, y;
+	constexpr v2(T xx = 0, T yy = 0) : x{xx}, y{yy} {}
+	const T &operator[](size_t n) const { return (&x)[n]; }
+	v2 operator+(v2 v) { return v2{x + v.x, y + v.y}; }
+};
 
-using vec2 = glm::vec2;
-using vec3 = glm::vec3;
-using vec4 = glm::vec4;
-using mat4 = glm::mat4;
-using ivec2 = glm::ivec2;
+using vec2 = v2<float>;
+using ivec2 = v2<int>;
+
+struct ortho {
+	float m[4][4]{};
+	constexpr ortho(float l, float r, float b, float t) {
+		m[0][0] = 2.0f / (r - l);
+		m[1][1] = 2.0f / (t - b);
+		m[2][2] = -1.0f;
+		m[3][0] = -(r + l) / (r - l);
+		m[3][1] = -(t + b) / (t - b);
+		m[3][3] = 1.0f;
+	}
+	operator const float *() const { return &m[0][0]; }
+};
 
 struct Error {
 	Error(const char *format, ...)
